@@ -8,16 +8,16 @@ module Opener
     attr_accessor :options
         
     def tag(text)
-      language = get_kaf_language(text)      
-      pos_tagger = pos_tagger_for_language(language)
-      output, error, process = Open3.capture3(pos_tagger.command, :stdin_data=>text)
+      language               = get_kaf_language(text)      
+      opinion_detector       = opinion_detector_for_language(language)
+      output, error, process = Open3.capture3(opinion_detector_text.command, :stdin_data=>text)
     end
     
     alias :run :tag
     
     protected
 
-    def pos_tagger_for_language(language)
+    def opinion_detector_for_language(language)
       Opener::OpinionDetectors.const_get(language.upcase).new
     end
     
