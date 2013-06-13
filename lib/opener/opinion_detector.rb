@@ -1,6 +1,7 @@
 require_relative "opinion_detector/version"
 require "opener/opinion_detectors/base"
 require "open3"
+require "nokogiri"
 
 module Opener
   class OpinionDetector
@@ -10,7 +11,7 @@ module Opener
     def tag(text)
       language               = get_kaf_language(text)      
       opinion_detector       = opinion_detector_for_language(language)
-      output, error, process = Open3.capture3(opinion_detector_text.command, :stdin_data=>text)
+      output, error, process = Open3.capture3(opinion_detector.command, :stdin_data=>text)
     end
     
     alias :run :tag
