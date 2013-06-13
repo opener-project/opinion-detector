@@ -1,0 +1,12 @@
+#!/usr/bin/env ruby
+require_relative '../lib/opener/opinion_detector'
+
+tokenizer = Opener::OpinionDetector.new
+
+output, error, process = tokenizer.run(STDIN.read)
+
+if process.success?
+  puts output
+else
+  abort error
+end

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link type="text/css" rel="stylesheet" charset="UTF-8" href="markdown.css"/>
+    <title>Opinion Detector Webservice</title>
+  </head>
+  <body>
+    <h1>Opinion Detector Web Service</h1>
+
+    <h2>Example Usage</h2>
+
+    <p>
+      <pre>opinion-detector-server start</pre>
+      <pre>curl -d &#39;text=&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;&lt;kafHeader&gt;&lt;linguisticProcessors layer=&quot;text&quot;&gt;&lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;&lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;&lt;/linguisticProcessors&gt;&lt;/kafHeader&gt;&lt;text&gt;&lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;&lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;&lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;&lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;&lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;&lt;/text&gt;&lt;/KAF&gt;&#39; http://localhost:9292 -XPOST</pre> 
+      
+      outputs:
+      
+      <pre>
+&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
+&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
+  &lt;kafHeader&gt;
+    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
+      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
+    &lt;/linguisticProcessors&gt;
+    &lt;linguisticProcessor layer=&quot;term&quot;&gt;
+      &lt;lp timestamp=&quot;2013-06-12T15:18:03CEST&quot; version=&quot;1.0&quot; name=&quot;Open nlp pos tagger&quot;/&gt;
+    &lt;/linguisticProcessor&gt;
+  &lt;/kafHeader&gt;
+  &lt;text&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
+    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
+  &lt;/text&gt;
+  &lt;terms&gt;
+    &lt;term lemma=&quot;this&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_1&quot; type=&quot;open&quot;&gt;
+      &lt;span&gt;
+        &lt;target id=&quot;w1&quot;/&gt;
+      &lt;/span&gt;
+    &lt;/term&gt;
+    &lt;term lemma=&quot;is&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_2&quot; type=&quot;open&quot;&gt;
+      &lt;span&gt;
+        &lt;target id=&quot;w2&quot;/&gt;
+      &lt;/span&gt;
+    &lt;/term&gt;
+    &lt;term lemma=&quot;an&quot; morphofeat=&quot;APPR&quot; pos=&quot;P&quot; tid=&quot;t_3&quot; type=&quot;close&quot;&gt;
+      &lt;span&gt;
+        &lt;target id=&quot;w3&quot;/&gt;
+      &lt;/span&gt;
+    &lt;/term&gt;
+    &lt;term lemma=&quot;english&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_4&quot; type=&quot;open&quot;&gt;
+      &lt;span&gt;
+        &lt;target id=&quot;w4&quot;/&gt;
+      &lt;/span&gt;
+    &lt;/term&gt;
+    &lt;term lemma=&quot;text&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_5&quot; type=&quot;open&quot;&gt;
+      &lt;span&gt;
+        &lt;target id=&quot;w5&quot;/&gt;
+      &lt;/span&gt;
+    &lt;/term&gt;
+  &lt;/terms&gt;
+&lt;/KAF&gt;</pre>
+    </p>
+
+    <h2>Try the webservice</h2>
+
+    <p>* required</p>
+    <p>** When entering a value no response will be displayed in the browser.</p>
+
+    <form action="/" method="POST">
+      <div>
+        <label for="text"/>Type your text here*</label>
+        <br/>
+
+        <textarea name="text" id="text" rows="10" cols="50"/></textarea>
+      </div>
+
+      <div>
+        <label for="callbacks">Callback URL (**)</label>
+        <br />
+
+        <input id="callbacks" type="text" name="callbacks" />
+      </div>
+
+      <div>
+        <label for="error_callback">Error Callback</label>
+        <br />
+
+        <input id="error_callback" type="text" name="error_callback" />
+      </div>
+      <input type="submit" value="Submit" />
+    </form>
+
+    <h2>Actions</h2>
+
+    <p>
+      <dl>
+        <dt>POST /</dt>
+        <dd>Detect opinion for input text. See arguments listing for more options.</dd>
+        <dt>GET /</dt>
+        <dd>Show this page</dd>
+      </dl>
+    </p>
+
+    <h2>Arguments</h2>
+
+    <p> The webservice takes the following arguments: </p>
+    <p>* required</p>
+
+    <dl>
+      <dt>text*</dt>
+      <dd>The input text in KAF format. Sample KAF input:</dd>
+      <pre>
+&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
+&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
+  &lt;kafHeader&gt;
+    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
+      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
+    &lt;/linguisticProcessors&gt;
+  &lt;/kafHeader&gt;
+  &lt;text&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
+    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
+    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
+    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
+  &lt;/text&gt;
+&lt;/KAF&gt;</pre>
+        
+      <dt>callbacks</dt>
+      <dd>
+            You can provide a list of callback urls. If you provide callback urls
+            the Opinion detector will run as a background job and a callback
+            with the results will be performed (POST) to the first url in the callback
+            list. The other urls in callback list will be provided in the "callbacks"
+            argument.<br/><br/>
+            Using callback you can chain together several OpeNER webservices in
+        one call. The first, will call the second, which will call the third, etc.
+        See for more information the <a href="http://opener-project.github.io">
+          webservice documentation online</a>.
+      </dd>
+      <dt>error_callback</dt>
+      <dd>URL to notify if errors occur in the background process. The error
+      callback will do a POST with the error message in the 'error' field.</dd>
+      </dt>
+
+
+
+    </dl>
+
+
+    <p>
+
+    </p>
+
+  </body>
+</html>
