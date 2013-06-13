@@ -1,0 +1,71 @@
+GIT
+  remote: git@github.com:opener-project/opinion-detector-base.git
+  revision: b8f69f7e12f0bcea75610caf7064238de7dcc728
+  specs:
+    opener-opinion-detector-base (0.1.0)
+      opener-build-tools
+      rake
+
+PATH
+  remote: .
+  specs:
+    opener-opinion-detector (0.1.0)
+      builder (~> 3.1)
+      httpclient
+      nokogiri
+      sinatra (~> 1.4.2)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    builder (3.2.2)
+    coderay (1.0.9)
+    cucumber (1.3.2)
+      builder (>= 2.1.2)
+      diff-lcs (>= 1.1.3)
+      gherkin (~> 2.12.0)
+      multi_json (~> 1.3)
+    diff-lcs (1.2.4)
+    gherkin (2.12.0)
+      multi_json (~> 1.3)
+    httpclient (2.3.3)
+    method_source (0.8.1)
+    mini_portile (0.5.0)
+    multi_json (1.7.6)
+    nokogiri (1.6.0)
+      mini_portile (~> 0.5.0)
+    opener-build-tools (0.2.2)
+      rake
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    rack (1.5.2)
+    rack-protection (1.5.0)
+      rack
+    rake (10.0.4)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-mocks (2.13.1)
+    sinatra (1.4.3)
+      rack (~> 1.4)
+      rack-protection (~> 1.4)
+      tilt (~> 1.3, >= 1.3.4)
+    slop (3.4.5)
+    tilt (1.4.1)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  cucumber
+  opener-opinion-detector!
+  opener-opinion-detector-base!
+  pry
+  rake
+  rspec
