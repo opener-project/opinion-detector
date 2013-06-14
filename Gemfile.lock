@@ -1,6 +1,6 @@
 GIT
   remote: git@github.com:opener-project/opinion-detector-base.git
-  revision: 075fbfc0fc607b433695839e6a7fa0fdb166d822
+  revision: 48a55bdd5dc44e279b1c03756dd6bf72e2df9b6d
   specs:
     opener-opinion-detector-base (0.1.0)
       opener-build-tools
