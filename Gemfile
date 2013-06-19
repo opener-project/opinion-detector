@@ -1,7 +1,4 @@
 source 'https://rubygems.org'
+source 'https://opener:Aek0YeeGup0ceephohcieW0eichiGha2Thoo0lohshunae9emaikeitainooleap@geminabox.olery.com'
 
 gemspec
-
-gem 'opener-opinion-detector-base', :git=>"git@github.com:opener-project/opinion-detector-base.git"
-
-
