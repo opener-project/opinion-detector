@@ -16,52 +16,109 @@
       outputs:
 
       <pre>
-&lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
-&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
-  &lt;kafHeader&gt;
-    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
-      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
-      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
-    &lt;/linguisticProcessors&gt;
-    &lt;linguisticProcessor layer=&quot;term&quot;&gt;
-      &lt;lp timestamp=&quot;2013-06-12T15:18:03CEST&quot; version=&quot;1.0&quot; name=&quot;Open nlp pos tagger&quot;/&gt;
-    &lt;/linguisticProcessor&gt;
-  &lt;/kafHeader&gt;
-  &lt;text&gt;
-    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
-    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
-    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
-    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
-    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
-  &lt;/text&gt;
-  &lt;terms&gt;
-    &lt;term lemma=&quot;this&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_1&quot; type=&quot;open&quot;&gt;
-      &lt;span&gt;
-        &lt;target id=&quot;w1&quot;/&gt;
-      &lt;/span&gt;
-    &lt;/term&gt;
-    &lt;term lemma=&quot;is&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_2&quot; type=&quot;open&quot;&gt;
-      &lt;span&gt;
-        &lt;target id=&quot;w2&quot;/&gt;
-      &lt;/span&gt;
-    &lt;/term&gt;
-    &lt;term lemma=&quot;an&quot; morphofeat=&quot;APPR&quot; pos=&quot;P&quot; tid=&quot;t_3&quot; type=&quot;close&quot;&gt;
-      &lt;span&gt;
-        &lt;target id=&quot;w3&quot;/&gt;
-      &lt;/span&gt;
-    &lt;/term&gt;
-    &lt;term lemma=&quot;english&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_4&quot; type=&quot;open&quot;&gt;
-      &lt;span&gt;
-        &lt;target id=&quot;w4&quot;/&gt;
-      &lt;/span&gt;
-    &lt;/term&gt;
-    &lt;term lemma=&quot;text&quot; morphofeat=&quot;FM&quot; pos=&quot;O&quot; tid=&quot;t_5&quot; type=&quot;open&quot;&gt;
-      &lt;span&gt;
-        &lt;target id=&quot;w5&quot;/&gt;
-      &lt;/span&gt;
-    &lt;/term&gt;
-  &lt;/terms&gt;
-&lt;/KAF&gt;</pre>
+        &lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
+        &lt;KAF xml:lang=&quot;en&quot;&gt;
+          &lt;kafHeader&gt;
+            &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:21:29CEST&quot; version=&quot;1.0&quot; name=&quot;Open-nlp sentence splitter&quot;/&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:21:29CEST&quot; version=&quot;1.0&quot; name=&quot;Open-nlp tokenizer&quot;/&gt;
+            &lt;/linguisticProcessors&gt;
+            &lt;linguisticProcessor layer=&quot;opinions&quot;&gt;
+              &lt;lp timestamp=&quot;2013-06-27T17:56:32EEST&quot; version=&quot;1.0&quot; name=&quot;Crfsuite machine learning opinion miner&quot;/&gt;
+            &lt;/linguisticProcessor&gt;
+            &lt;linguisticProcessor layer=&quot;terms&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:23:08CEST&quot; version=&quot;1.0&quot; name=&quot;Basic_polarity_tagger_with_pos&quot;/&gt;
+            &lt;/linguisticProcessor&gt;
+            &lt;linguisticProcessor layer=&quot;term&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:23:07CEST&quot; version=&quot;1.0&quot; name=&quot;TreeTagger_from_kaf&quot;/&gt;
+            &lt;/linguisticProcessor&gt;
+          &lt;/kafHeader&gt;
+          &lt;text&gt;
+            &lt;wf wid=&quot;w_1&quot; sent=&quot;s_1&quot;&gt;This&lt;/wf&gt;
+            &lt;wf wid=&quot;w_2&quot; sent=&quot;s_1&quot;&gt;is&lt;/wf&gt;
+            &lt;wf wid=&quot;w_3&quot; sent=&quot;s_1&quot;&gt;a&lt;/wf&gt;
+            &lt;wf wid=&quot;w_4&quot; sent=&quot;s_1&quot;&gt;very&lt;/wf&gt;
+            &lt;wf wid=&quot;w_5&quot; sent=&quot;s_1&quot;&gt;nice&lt;/wf&gt;
+            &lt;wf wid=&quot;w_6&quot; sent=&quot;s_1&quot;&gt;hotel&lt;/wf&gt;
+            &lt;wf wid=&quot;w_7&quot; sent=&quot;s_1&quot;&gt;in&lt;/wf&gt;
+            &lt;wf wid=&quot;w_8&quot; sent=&quot;s_1&quot;&gt;Amsterdam&lt;/wf&gt;
+          &lt;/text&gt;
+          &lt;terms&gt;
+            &lt;term tid=&quot;t_1&quot; lemma=&quot;this&quot; morphofeat=&quot;DT&quot; type=&quot;close&quot; pos=&quot;D&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_1&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_2&quot; lemma=&quot;be&quot; morphofeat=&quot;VBZ&quot; type=&quot;open&quot; pos=&quot;V&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_2&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_3&quot; lemma=&quot;a&quot; morphofeat=&quot;DT&quot; type=&quot;close&quot; pos=&quot;D&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_3&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_4&quot; lemma=&quot;very&quot; morphofeat=&quot;RB&quot; type=&quot;open&quot; pos=&quot;A&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_4&quot;/&gt;
+              &lt;/span&gt;
+              &lt;sentiment sentiment_modifier=&quot;intensifier&quot; resource=&quot;VUA_olery_lexicon_en_lmf&quot;/&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_5&quot; lemma=&quot;nice&quot; morphofeat=&quot;JJ&quot; type=&quot;open&quot; pos=&quot;G&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_5&quot;/&gt;
+              &lt;/span&gt;
+              &lt;sentiment polarity=&quot;positive&quot; resource=&quot;VUA_olery_lexicon_en_lmf&quot;/&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_6&quot; lemma=&quot;hotel&quot; morphofeat=&quot;NN&quot; type=&quot;open&quot; pos=&quot;N&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_6&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_7&quot; lemma=&quot;in&quot; morphofeat=&quot;IN&quot; type=&quot;close&quot; pos=&quot;P&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_7&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_8&quot; lemma=&quot;Amsterdam&quot; morphofeat=&quot;NP&quot; type=&quot;open&quot; pos=&quot;R&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_8&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+          &lt;/terms&gt;
+          &lt;entities&gt;
+            &lt;entity eid=&quot;e15&quot; type=&quot;location&quot;&gt;
+              &lt;references&gt;
+                &lt;span&gt;
+                  &lt;!--Amsterdam --&gt;
+                  &lt;target id=&quot;t_8&quot;/&gt;
+                &lt;/span&gt;
+              &lt;/references&gt;
+            &lt;/entity&gt;
+          &lt;/entities&gt;
+          &lt;opinions&gt;
+            &lt;opinion oid=&quot;o_1&quot;&gt;
+              &lt;opinion_holder&gt;
+                &lt;span/&gt;
+              &lt;/opinion_holder&gt;
+              &lt;opinion_target&gt;
+                &lt;span&gt;
+                  &lt;target id=&quot;t_1&quot;/&gt;
+                &lt;/span&gt;
+              &lt;/opinion_target&gt;
+              &lt;opinion_expression polarity=&quot;positive&quot; strength=&quot;1&quot;&gt;
+                &lt;span&gt;
+                  &lt;target id=&quot;t_4&quot;/&gt;
+                  &lt;target id=&quot;t_5&quot;/&gt;
+                  &lt;target id=&quot;t_6&quot;/&gt;
+                  &lt;target id=&quot;t_7&quot;/&gt;
+                  &lt;target id=&quot;t_8&quot;/&gt;
+                &lt;/span&gt;
+              &lt;/opinion_expression&gt;
+            &lt;/opinion&gt;
+          &lt;/opinions&gt;
+        &lt;/KAF&gt;</pre>
     </p>
 
     <h2>Try the webservice</h2>
@@ -71,17 +128,17 @@
 
     <form action="<%=url("/")%>" method="POST">
       <div>
-        <label for="text"/>Type your text here*</label>
+        <label for="input"/>Type your text here*</label>
         <br/>
 
-        <textarea name="text" id="text" rows="10" cols="50"/></textarea>
+        <textarea name="input" id="text" rows="10" cols="50"/></textarea>
       </div>
 
       <div>
         <label for="callbacks">Callback URL (**)</label>
         <br />
 
-        <input id="callbacks" type="text" name="callbacks" />
+        <input id="callbacks" type="text" name="callbacks[]" />
       </div>
 
       <div>
@@ -113,22 +170,85 @@
       <dt>text*</dt>
       <dd>The input text in KAF format. Sample KAF input:</dd>
       <pre>
-&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; standalone=&quot;no&quot;?&gt;
-&lt;KAF version=&quot;v1.opener&quot; xml:lang=&quot;en&quot;&gt;
-  &lt;kafHeader&gt;
-    &lt;linguisticProcessors layer=&quot;text&quot;&gt;
-      &lt;lp name=&quot;opennlp-en-tok&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
-      &lt;lp name=&quot;opennlp-en-sent&quot; timestamp=&quot;2013-06-11T13:41:37Z&quot; version=&quot;1.0&quot;/&gt;
-    &lt;/linguisticProcessors&gt;
-  &lt;/kafHeader&gt;
-  &lt;text&gt;
-    &lt;wf length=&quot;4&quot; offset=&quot;0&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w1&quot;&gt;this&lt;/wf&gt;
-    &lt;wf length=&quot;2&quot; offset=&quot;5&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w2&quot;&gt;is&lt;/wf&gt;
-    &lt;wf length=&quot;2&quot; offset=&quot;8&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w3&quot;&gt;an&lt;/wf&gt;
-    &lt;wf length=&quot;7&quot; offset=&quot;11&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w4&quot;&gt;english&lt;/wf&gt;
-    &lt;wf length=&quot;4&quot; offset=&quot;19&quot; para=&quot;1&quot; sent=&quot;1&quot; wid=&quot;w5&quot;&gt;text&lt;/wf&gt;
-  &lt;/text&gt;
-&lt;/KAF&gt;</pre>
+        &lt;?xml version=&#39;1.0&#39; encoding=&#39;UTF-8&#39;?&gt;
+        &lt;KAF xml:lang=&quot;en&quot;&gt;
+          &lt;kafHeader&gt;
+            &lt;linguisticProcessors layer=&quot;text&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:21:29CEST&quot; version=&quot;1.0&quot; name=&quot;Open-nlp sentence splitter&quot;/&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:21:29CEST&quot; version=&quot;1.0&quot; name=&quot;Open-nlp tokenizer&quot;/&gt;
+            &lt;/linguisticProcessors&gt;
+            &lt;linguisticProcessor layer=&quot;terms&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:23:08CEST&quot; version=&quot;1.0&quot; name=&quot;Basic_polarity_tagger_with_pos&quot;/&gt;
+            &lt;/linguisticProcessor&gt;
+            &lt;linguisticProcessor layer=&quot;term&quot;&gt;
+              &lt;lp timestamp=&quot;2013-04-11T09:23:07CEST&quot; version=&quot;1.0&quot; name=&quot;TreeTagger_from_kaf&quot;/&gt;
+            &lt;/linguisticProcessor&gt;
+          &lt;/kafHeader&gt;
+          &lt;text&gt;
+            &lt;wf wid=&quot;w_1&quot; sent=&quot;s_1&quot;&gt;This&lt;/wf&gt;
+            &lt;wf wid=&quot;w_2&quot; sent=&quot;s_1&quot;&gt;is&lt;/wf&gt;
+            &lt;wf wid=&quot;w_3&quot; sent=&quot;s_1&quot;&gt;a&lt;/wf&gt;
+            &lt;wf wid=&quot;w_4&quot; sent=&quot;s_1&quot;&gt;very&lt;/wf&gt;
+            &lt;wf wid=&quot;w_5&quot; sent=&quot;s_1&quot;&gt;nice&lt;/wf&gt;
+            &lt;wf wid=&quot;w_6&quot; sent=&quot;s_1&quot;&gt;hotel&lt;/wf&gt;
+            &lt;wf wid=&quot;w_7&quot; sent=&quot;s_1&quot;&gt;in&lt;/wf&gt;
+            &lt;wf wid=&quot;w_8&quot; sent=&quot;s_1&quot;&gt;Amsterdam&lt;/wf&gt;
+          &lt;/text&gt;
+          &lt;terms&gt;
+            &lt;term tid=&quot;t_1&quot; lemma=&quot;this&quot; morphofeat=&quot;DT&quot; type=&quot;close&quot; pos=&quot;D&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_1&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_2&quot; lemma=&quot;be&quot; morphofeat=&quot;VBZ&quot; type=&quot;open&quot; pos=&quot;V&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_2&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_3&quot; lemma=&quot;a&quot; morphofeat=&quot;DT&quot; type=&quot;close&quot; pos=&quot;D&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_3&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_4&quot; lemma=&quot;very&quot; morphofeat=&quot;RB&quot; type=&quot;open&quot; pos=&quot;A&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_4&quot;/&gt;
+              &lt;/span&gt;
+              &lt;sentiment sentiment_modifier=&quot;intensifier&quot; resource=&quot;VUA_olery_lexicon_en_lmf&quot;/&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_5&quot; lemma=&quot;nice&quot; morphofeat=&quot;JJ&quot; type=&quot;open&quot; pos=&quot;G&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_5&quot;/&gt;
+              &lt;/span&gt;
+              &lt;sentiment polarity=&quot;positive&quot; resource=&quot;VUA_olery_lexicon_en_lmf&quot;/&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_6&quot; lemma=&quot;hotel&quot; morphofeat=&quot;NN&quot; type=&quot;open&quot; pos=&quot;N&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_6&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_7&quot; lemma=&quot;in&quot; morphofeat=&quot;IN&quot; type=&quot;close&quot; pos=&quot;P&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_7&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+            &lt;term tid=&quot;t_8&quot; lemma=&quot;Amsterdam&quot; morphofeat=&quot;NP&quot; type=&quot;open&quot; pos=&quot;R&quot;&gt;
+              &lt;span&gt;
+                &lt;target id=&quot;w_8&quot;/&gt;
+              &lt;/span&gt;
+            &lt;/term&gt;
+          &lt;/terms&gt;
+          &lt;entities&gt;
+            &lt;entity eid=&quot;e15&quot; type=&quot;location&quot;&gt;
+        	&lt;references&gt;
+                &lt;span&gt;
+                  &lt;!--Amsterdam --&gt;
+                  &lt;target id=&quot;t_8&quot; /&gt;
+                &lt;/span&gt;
+        	&lt;/references&gt;
+            &lt;/entity&gt;
+          &lt;/entities&gt;
+        &lt;/KAF&gt;</pre>
 
       <dt>callbacks</dt>
       <dd>
