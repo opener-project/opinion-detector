@@ -43,7 +43,7 @@ module Opener
         end
 
         callbacks = extract_callbacks(params[:callbacks])
-        
+
         if callbacks.empty?
           process_sync
         else
@@ -63,10 +63,10 @@ module Opener
         content_type(:xml)
 
         body(output)
-      rescue => error
-        logger.error("Failed to analyze the text: #{error.inspect}")
+      #rescue => error
+        #logger.error("Failed to analyze the text: #{error.inspect}")
 
-        halt(500, error.message)
+        #halt(500, error.message)
       end
 
       ##
@@ -148,7 +148,7 @@ module Opener
       def submit_error(url, message)
         HTTPClient.post(url, :body => {:error => message})
       end
-      
+
       ##
       # Returns an Array containing the callback URLs, ignoring empty values.
       #
