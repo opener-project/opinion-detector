@@ -23,7 +23,8 @@ module Opener
     # @return [Hash]
     #
     DEFAULT_OPTIONS = {
-      :args => []
+      :args     => [],
+      :fallback => 'en'
     }.freeze
 
     ##
@@ -31,6 +32,9 @@ module Opener
     #
     # @option options [Array] :args Collection of arbitrary arguments to pass
     #  to the individual tokenizer commands.
+    #
+    # @option options [String] :fallback When set this language will be used as
+    #  a fallback language, otherwise an error is raised instead.
     #
     def initialize(options = {})
       @options = DEFAULT_OPTIONS.merge(options)
@@ -47,7 +51,11 @@ module Opener
       language = language_from_kaf(input)
 
       unless valid_language?(language)
-        raise ArgumentError, "The specified language (#{language}) is invalid"
+        if options[:fallback]
+          language = options[:fallback]
+        else
+          raise ArgumentError, "The specified language (#{language}) is invalid"
+        end
       end
 
       kernel = language_constant(language).new(:args => options[:args])
