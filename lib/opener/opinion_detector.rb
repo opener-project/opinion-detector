@@ -89,7 +89,11 @@ module Opener
     # @return [TrueClass|FalseClass]
     #
     def valid_language?(language)
-      return Opener::OpinionDetectors.const_defined?(language.upcase)
+      if language
+        return Opener::OpinionDetectors.const_defined?(language.upcase)
+      else
+        return false
+      end
     end
   end # OpinionDetector
 end # Opener
