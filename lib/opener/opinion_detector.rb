@@ -51,8 +51,7 @@ module Opener
       end
 
       kernel = language_constant(language).new(:args => options[:args])
-
-      return Open3.capture3(kernel.command, :stdin_data => input)
+      return kernel.run(input)
     end
 
     protected
