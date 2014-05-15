@@ -10,9 +10,14 @@ Gem::Specification.new do |gem|
   gem.has_rdoc              = "yard"
   gem.required_ruby_version = ">= 1.9.2"
 
-  gem.files       = `git ls-files`.split("\n")
-  gem.executables = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
-  gem.test_files  = gem.files.grep(%r{^(test|spec|features)/})
+  gem.files = Dir.glob([
+    'lib/**/*',
+    'config.ru',
+    '*.gemspec',
+    'README.md'
+  ]).select { |file| File.file?(file) }
+
+  gem.executables = Dir.glob('bin/*').map { |file| File.basename(file) }
 
   gem.add_dependency 'opener-opinion-detector-base'
   gem.add_dependency 'nokogiri'
