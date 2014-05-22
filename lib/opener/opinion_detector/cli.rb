@@ -1,3 +1,5 @@
+require 'opener/core/resource_switcher'
+
 module Opener
   class OpinionDetector
     ##
@@ -9,17 +11,20 @@ module Opener
     #  @return [OptionParser]
     #
     class CLI
-      attr_reader :options, :option_parser
+      attr_reader :options, :option_parser, :resource_switcher
 
       ##
       # @param [Hash] options
       #
       def initialize(options = {})
         @options = DEFAULT_OPTIONS.merge(options)
+        @resource_switcher = Opener::Core::ResourceSwitcher.new
 
         @option_parser = OptionParser.new do |opts|
           opts.program_name   = 'opinion-detector'
           opts.summary_indent = '  '
+
+          resource_switcher.bind(opts, @options)
 
           opts.on('-h', '--help', 'Shows this help message') do
             show_help
@@ -32,15 +37,10 @@ module Opener
           opts.on('-l', '--log', 'Enables logging to STDERR') do
             @options[:logging] = true
           end
-
-          opts.separator <<-EOF
-
-Examples:
-
-  cat example.kaf | #{opts.program_name}
-  cat example.kaf | #{opts.program_name} -l # Enables logging to STDERR
-          EOF
         end
+
+        option_parser.parse!(options[:args])
+        resource_switcher.install(@options)
       end
 
       ##
