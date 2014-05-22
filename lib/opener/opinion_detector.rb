@@ -50,7 +50,7 @@ module Opener
         raise ArgumentError, "The specified language (#{language}) is invalid"
       end
 
-      kernel = language_constant(language).new(:args => options[:args])
+      kernel = language_constant(language).new(options)
       return kernel.run(input)
     end
 
