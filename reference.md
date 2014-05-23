@@ -22,8 +22,7 @@ opinion-detector-server
 After launching the server, you can reach the webservice at
 <http://localhost:9292>.
 
-The webservice takes several options that get passed along to [Puma](http://puma.io), the
-webserver used by the component. The options are:
+The webservice takes several options that get passed along to [Puma](http://puma.io), the webserver used by the component. The options are:
 
 ```
     -b, --bind URI                   URI to bind to (tcp://, unix://, ssl://)
@@ -81,9 +80,7 @@ Daemon options:
 
 #### Environment Variables
 
-These daemons make use of Amazon SQS queues and other Amazon services.
-The access to these services and other environment variables can be configured
-using a .opener-daemons-env file in the home directory of the current user.
+These daemons make use of Amazon SQS queues and other Amazon services. The access to these services and other environment variables can be configured using a .opener-daemons-env file in the home directory of the current user.
 
 It is also possible to provide the environment variables directly to the deamon.
 
@@ -101,8 +98,7 @@ We advise to have the following environment variables available:
 
 ### Languages
 
-This depends on the models you are loading. There is a set of models present at:
-[http://opener.s3.amazonaws.com/Models/final_models_news_20140522.zip](http://opener.s3.amazonaws.com/Models/final_models_news_20140522.zip)
+This depends on the models you are loading. There is a set of models present at: [http://opener.s3.amazonaws.com/Models/final_models_news_20140522.zip](http://opener.s3.amazonaws.com/Models/final_models_news_20140522.zip)
 
 Which includes models, trained on news for:
 
