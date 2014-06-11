@@ -32,6 +32,10 @@ module Opener
           opts.on('-l', '--log', 'Enables logging to STDERR') do
             @options[:logging] = true
           end
+          
+          opts.on('-d', '--domain DOMAIN_NAME', 'Domain name of the models.') do |v|
+            @options[:domain] = v
+          end
 
           opts.separator <<-EOF
 
@@ -53,15 +57,7 @@ Examples:
 
         stdout, stderr, process = tagger.run(input)
 
-        if process.success?
-          puts stdout
-
-          if options[:logging] and !stderr.empty?
-            STDERR.puts(stderr)
-          end
-        else
-          abort stderr
-        end
+        puts stdout
       end
 
       private
