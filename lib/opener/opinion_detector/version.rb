@@ -1,5 +1,5 @@
 module Opener
   class OpinionDetector
-    VERSION = "0.6.0"
+    VERSION = "1.1.3"
   end
 end

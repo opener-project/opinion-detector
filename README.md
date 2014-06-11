@@ -1,225 +1,111 @@
-# OpinionDetector
+Opinion Detector
+----------------
 
-Component that wraps the different existing Opinion Detectors.
+Component that wraps a machine learned Opinion Detector in Python.
 
-## Requirements
+### Confused by some terminology?
 
-* Perl 5
-* Ruby 1.9.2 or newer
-* Make
+This software is part of a larger collection of natural language processing tools known as "the OpeNER project". You can find more information about the project at [the OpeNER portal](http://opener-project.github.io). There you can also find references to terms like KAF (an XML standard to represent linguistic annotations in texts), component, cores, scenario's and pipelines.
 
-## Developers
+Quick Use Example
+-----------------
 
-See how to edit / change / compile this gem at the bottom of this file.
+Installing the opinion-detector can be done by executing:
 
-## Installation
+    gem install opener-opinion-detector
 
-### As part of a Gemfile in a Ruby application
+Please bare in mind that all components in OpeNER take KAF as an input and output KAF by default.
 
-Add this line to your application's Gemfile:
+### Command line interface
 
-    gem 'opener-opinion-detector',
-        :git=>"git@github.com:opener-project/opinion-detector.git"
+You should now be able to call the opinion detector as a regular shell command: by its name. Once installed the gem normally sits in your path so you can call it directly from anywhere.
 
-And then execute:
+This application reads a text from standard input in order process it. It needs models to work. There is a free set of models available trained on a news corpus.
 
-    $ bundle install
+    cat englist.kaf | opinion-detector \
+          --resource-path /path/to/models \
+          --resource-url http://opener.s3.amazonaws.com/Models/final_models_news_20140522.zip
 
-### As a standalone GEM:
+You have to download the models separately. You can download them here:
 
-Make sure you have the ```specific_install``` gem installed first by running
+This will output:
 
-    $ gem install specific_install
+```
 
-After that you can install the gem from the git repository like this:
+```
 
-    $ gem specific_install opener-opinion-detector \
-        -l https://github.com/opener-project/opinion-detector.git
+### Webservices
 
-Once the gem is installed you have access to the following command from
-anywhere on your computer:
-
-    $ cat englist.kaf | opinion-detector
-
-or you can launch a webservice with
-
-    $ opinion-detector-server
-
-KAF file text:
-
-    <?xml version='1.0' encoding='UTF-8'?>
-    <KAF xml:lang="en">
-      <kafHeader>
-        <linguisticProcessors layer="text">
-          <lp timestamp="2013-04-11T09:21:29CEST" version="1.0" name="Open-nlp sentence splitter"/>
-          <lp timestamp="2013-04-11T09:21:29CEST" version="1.0" name="Open-nlp tokenizer"/>
-        </linguisticProcessors>
-        <linguisticProcessor layer="terms">
-          <lp timestamp="2013-04-11T09:23:08CEST" version="1.0" name="Basic_polarity_tagger_with_pos"/>
-        </linguisticProcessor>
-        <linguisticProcessor layer="term">
-          <lp timestamp="2013-04-11T09:23:07CEST" version="1.0" name="TreeTagger_from_kaf"/>
-        </linguisticProcessor>
-      </kafHeader>
-      <text>
-        <wf wid="w_1" sent="s_1">This</wf>
-        <wf wid="w_2" sent="s_1">is</wf>
-        <wf wid="w_3" sent="s_1">a</wf>
-        <wf wid="w_4" sent="s_1">very</wf>
-        <wf wid="w_5" sent="s_1">nice</wf>
-        <wf wid="w_6" sent="s_1">hotel</wf>
-        <wf wid="w_7" sent="s_1">in</wf>
-        <wf wid="w_8" sent="s_1">Amsterdam</wf>
-      </text>
-      <terms>
-        <term tid="t_1" lemma="this" morphofeat="DT" type="close" pos="D">
-          <span>
-            <target id="w_1"/>
-          </span>
-        </term>
-        <term tid="t_2" lemma="be" morphofeat="VBZ" type="open" pos="V">
-          <span>
-            <target id="w_2"/>
-          </span>
-        </term>
-        <term tid="t_3" lemma="a" morphofeat="DT" type="close" pos="D">
-          <span>
-            <target id="w_3"/>
-          </span>
-        </term>
-        <term tid="t_4" lemma="very" morphofeat="RB" type="open" pos="A">
-          <span>
-            <target id="w_4"/>
-          </span>
-          <sentiment sentiment_modifier="intensifier" resource="VUA_olery_lexicon_en_lmf"/>
-        </term>
-        <term tid="t_5" lemma="nice" morphofeat="JJ" type="open" pos="G">
-          <span>
-            <target id="w_5"/>
-          </span>
-          <sentiment polarity="positive" resource="VUA_olery_lexicon_en_lmf"/>
-        </term>
-        <term tid="t_6" lemma="hotel" morphofeat="NN" type="open" pos="N">
-          <span>
-            <target id="w_6"/>
-          </span>
-        </term>
-        <term tid="t_7" lemma="in" morphofeat="IN" type="close" pos="P">
-          <span>
-            <target id="w_7"/>
-          </span>
-        </term>
-        <term tid="t_8" lemma="Amsterdam" morphofeat="NP" type="open" pos="R">
-          <span>
-            <target id="w_8"/>
-          </span>
-        </term>
-      </terms>
-      <entities>
-        <entity eid="e15" type="location">
-    	<references>
-            <span>
-              <!--Amsterdam -->
-              <target id="t_8" />
-            </span>
-    	</references>
-        </entity>
-      </entities>
-    </KAF>
-
-
-Enjoy!
-
-## Usage
-
-Detecting opinion for some text (assuming that the above text is in a file called *english.kaf*):
-
-    cat english.kaf | opinion-detector
-    
-
-Will result in
-
-    <?xml version='1.0' encoding='UTF-8'?>
-    <KAF version="v1.opener" xml:lang="en">
-      <kafHeader>
-        <linguisticProcessors layer="text">
-          <lp name="opennlp-en-tok" timestamp="2013-06-11T13:41:37Z" version="1.0"/>
-          <lp name="opennlp-en-sent" timestamp="2013-06-11T13:41:37Z" version="1.0"/>
-        </linguisticProcessors>
-        <linguisticProcessor layer="term">
-          <lp timestamp="2013-06-12T15:18:03CEST" version="1.0" name="Open nlp pos tagger"/>
-        </linguisticProcessor>
-      </kafHeader>
-      <text>
-        <wf length="4" offset="0" para="1" sent="1" wid="w1">this</wf>
-        <wf length="2" offset="5" para="1" sent="1" wid="w2">is</wf>
-        <wf length="2" offset="8" para="1" sent="1" wid="w3">an</wf>
-        <wf length="7" offset="11" para="1" sent="1" wid="w4">english</wf>
-        <wf length="4" offset="19" para="1" sent="1" wid="w5">text</wf>
-      </text>
-      <terms>
-        <term lemma="this" morphofeat="FM" pos="O" tid="t_1" type="open">
-          <span>
-            <target id="w1"/>
-          </span>
-        </term>
-        <term lemma="is" morphofeat="FM" pos="O" tid="t_2" type="open">
-          <span>
-            <target id="w2"/>
-          </span>
-        </term>
-        <term lemma="an" morphofeat="APPR" pos="P" tid="t_3" type="close">
-          <span>
-            <target id="w3"/>
-          </span>
-        </term>
-        <term lemma="english" morphofeat="FM" pos="O" tid="t_4" type="open">
-          <span>
-            <target id="w4"/>
-          </span>
-        </term>
-        <term lemma="text" morphofeat="FM" pos="O" tid="t_5" type="open">
-          <span>
-            <target id="w5"/>
-          </span>
-        </term>
-      </terms>
-    </KAF>
-  
-## Server
-
-The Opinion Detector comes equipped with a simple webservice. To start the
-webservice type:
+You can launch a webservice by executing:
 
     opinion-detector-server
 
-This will launch a mini webserver with the webservice. It defaults to port 9292,
-so you can access it at:
+This will launch a mini webserver with the webservice. It defaults to port 9292, so you can access it at <http://localhost:9292>.
 
-    http://localhost:9292
-
-To launch it on a different port provide the ```-p [port-number]``` option like
-this:
+To launch it on a different port provide the `-p [port-number]` option like this:
 
     opinion-detector-server -p 1234
 
-It then launches at ```http://localhost:1234```
+It then launches at <http://localhost:1234>
 
-Documentation on the Webservice is provided by surfing to the urls provided
-above. 
+Documentation on the Webservice is provided by surfing to the urls provided above. For more information on how to launch a webservice run the command with the ```-h``` option.
 
 
-## Contributing
+### Daemon
 
-### Procedure
+Last but not least the opinion detector comes shipped with a daemon that can read jobs (and write) jobs to and from Amazon SQS queues. For more information type:
 
-1. Pull it
-2. Create your feature branch (`git checkout -b features/my-new-feature`)
+    opinion-detector-daemon -h
+
+
+Description of dependencies
+---------------------------
+
+This component runs best if you run it in an environment suited for OpeNER components. You can find an installation guide and helper tools in the [OpeNER installer](https://github.com/opener-project/opener-installer) and an [installation guide on the Opener Website](http://opener-project.github.io/getting-started/how-to/local-installation.html)
+
+At least you need the following system setup:
+
+### Dependencies for normal use:
+
+* Ruby 1.9.3 or newer
+* Python 2.6 or newer
+* lxml
+
+Domain Adaption
+---------------
+
+  TODO
+
+Language Extension
+------------------
+
+  TODO
+
+The Core
+--------
+
+The component is a fat wrapper around the actual language technology core. You can find the core technolies in the following repository
+
+* [opinion-detector-base](https://github.com/opener-project/opinion-detector-base)
+
+Where to go from here
+---------------------
+
+* [Check the project website](http://opener-project.github.io)
+* [Checkout the webservice](http://opener.olery.com/opinion-detector)
+
+Report problem/Get help
+-----------------------
+
+If you encounter problems, please email <support@opener-project.eu> or leave an issue in the 
+[issue tracker](https://github.com/opener-project/opinion-detector/issues).
+
+
+Contributing
+------------
+
+1. Fork it <http://github.com/opener-project/opinion-detector/fork>
+2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin features/my-new-feature`)
-5. If you're confident, merge your changes into master.
-
-# What's next? 
-
-If you're interested in the pos_tagger, you also might want to check
-out opener-project/opinion-detector.
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
