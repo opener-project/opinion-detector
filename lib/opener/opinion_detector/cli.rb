@@ -1,4 +1,4 @@
-require 'opener/core/resource_switcher'
+require 'opener/core'
 
 module Opener
   class OpinionDetector
@@ -37,7 +37,7 @@ module Opener
           opts.on('-l', '--log', 'Enables logging to STDERR') do
             @options[:logging] = true
           end
-          
+
           opts.on('-d', '--domain DOMAIN_NAME', 'Domain name of the models.') do |v|
             @options[:domain] = v
           end
