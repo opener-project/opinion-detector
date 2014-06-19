@@ -5,7 +5,6 @@ require 'optparse'
 
 require_relative 'opinion_detector/version'
 require_relative 'opinion_detector/cli'
-require_relative 'opinion_detector/error_layer'
 
 module Opener
   ##
@@ -58,7 +57,7 @@ module Opener
         return stdout
         
       rescue Exception => error
-        return ErrorLayer.new(input, error.message, self.class).add
+        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
       end
     end
 
