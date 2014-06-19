@@ -2,6 +2,7 @@ require 'opener/opinion_detectors/base'
 require 'open3'
 require 'nokogiri'
 require 'optparse'
+require 'opener/core'
 
 require_relative 'opinion_detector/version'
 require_relative 'opinion_detector/cli'
