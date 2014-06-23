@@ -61,11 +61,9 @@ Examples:
       def run(input)
         option_parser.parse!(options[:args])
 
-        tagger = OpinionDetector.new(options)
+        detector = OpinionDetector.new(options)
 
-        stdout, stderr, process = tagger.run(input)
-
-        puts stdout
+        puts detector.run(input)
       end
 
       private
