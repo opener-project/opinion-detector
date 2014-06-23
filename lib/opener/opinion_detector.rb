@@ -42,7 +42,7 @@ module Opener
     # STDERR and an object containing process information.
     #
     # @param [String] input
-    # @return [Array]
+    # @return [String]
     #
     def run(input)
       begin
@@ -53,10 +53,8 @@ module Opener
         end
 
         kernel = language_constant(language).new(:args => options[:args])
-        stdout, stderr, process = kernel.run(input)
-        raise stderr unless process.success?
-        return stdout
-        
+
+        return kernel.run(input)
       rescue Exception => error
         return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
       end
