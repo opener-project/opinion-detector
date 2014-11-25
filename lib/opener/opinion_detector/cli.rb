@@ -1,85 +1,65 @@
-require 'opener/core'
-
 module Opener
   class OpinionDetector
     ##
-    # CLI wrapper around {Opener::OpinionDetector} using OptionParser.
+    # CLI wrapper around {Opener::OpinionDetector} using Slop.
     #
-    # @!attribute [r] options
-    #  @return [Hash]
-    # @!attribute [r] option_parser
-    #  @return [OptionParser]
+    # @!attribute [r] parser
+    #  @return [Slop]
     #
     class CLI
-      attr_reader :options, :option_parser, :resource_switcher
+      attr_reader :parser
+
+      def initialize
+        @parser = configure_slop
+      end
 
       ##
-      # @param [Hash] options
+      # @param [Array] argv
       #
-      def initialize(options = {})
-        @options = DEFAULT_OPTIONS.merge(options)
-        @resource_switcher = Opener::Core::ResourceSwitcher.new
+      def run(argv = ARGV)
+        parser.parse(argv)
+      end
 
-        @option_parser = OptionParser.new do |opts|
-          opts.program_name   = 'opinion-detector'
-          opts.summary_indent = '  '
+      ##
+      # @return [Slop]
+      #
+      def configure_slop
+        return Slop.new(:strict => false, :indent => 2, :help => true) do
+          banner 'Usage: opinion-detector [OPTIONS]'
 
-          resource_switcher.bind(opts, @options)
+          separator <<-EOF.chomp
 
-          opts.on('-h', '--help', 'Shows this help message') do
-            show_help
-          end
+About:
 
-          opts.on('-v', '--version', 'Shows the current version') do
-            show_version
-          end
+    Machine learning based opinion detection for various languages such as Dutch
+    and English. This command reads input from STDIN.
 
-          opts.on('-l', '--log', 'Enables logging to STDERR') do
-            @options[:logging] = true
-          end
+Example:
 
-          opts.on('-d', '--domain DOMAIN_NAME', 'Domain name of the models.') do |v|
-            @options[:domain] = v
-          end
-
-          opts.separator <<-EOF
-
-Examples:
-
-  cat example.kaf | #{opts.program_name}
-  cat example.kaf | #{opts.program_name} -l # Enables logging to STDERR
+    cat some_file.kaf | opinion-detector
           EOF
+
+          separator "\nOptions:\n"
+
+          on :v, :version, 'Shows the current version' do
+            abort "opinion-detector v#{VERSION} on #{RUBY_DESCRIPTION}"
+          end
+
+          on :d=, :domain=, 'The domain to use for the models',
+            :as      => String,
+            :default => 'hotel'
+
+          run do |opts, args|
+            detector = OpinionDetector.new(
+              :args   => args,
+              :domain => opts[:domain]
+            )
+
+            input = STDIN.tty? ? nil : STDIN.read
+
+            puts detector.run(input)
+          end
         end
-
-        option_parser.parse!(options[:args])
-        resource_switcher.install(@options)
-      end
-
-      ##
-      # @param [String] input
-      #
-      def run(input)
-        option_parser.parse!(options[:args])
-
-        detector = OpinionDetector.new(options)
-
-        puts detector.run(input)
-      end
-
-      private
-
-      ##
-      # Shows the help message and exits the program.
-      #
-      def show_help
-        abort option_parser.to_s
-      end
-
-      ##
-      # Shows the version and exits the program.
-      #
-      def show_version
-        abort "#{option_parser.program_name} v#{VERSION} on #{RUBY_DESCRIPTION}"
       end
     end # CLI
   end # OpinionDetector

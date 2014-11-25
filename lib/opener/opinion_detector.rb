@@ -1,8 +1,8 @@
-require 'opener/opinion_detectors/base'
 require 'open3'
+
 require 'nokogiri'
-require 'optparse'
-require 'opener/core'
+require 'slop'
+require 'opener/opinion_detectors/base'
 
 require_relative 'opinion_detector/version'
 require_relative 'opinion_detector/cli'
@@ -19,48 +19,53 @@ module Opener
     attr_reader :options
 
     ##
-    # Hash containing the default options to use.
-    #
-    # @return [Hash]
-    #
-    DEFAULT_OPTIONS = {
-      :args => []
-    }.freeze
-
-    ##
     # @param [Hash] options
     #
-    # @option options [Array] :args Collection of arbitrary arguments to pass
-    #  to the individual tokenizer commands.
+    # @see [Opener::OpinionDetectors::Base#initialize]
     #
     def initialize(options = {})
-      @options = DEFAULT_OPTIONS.merge(options)
+      @options = options
     end
 
     ##
-    # Processes the input and returns an array containing the output of STDOUT,
-    # STDERR and an object containing process information.
+    # Processes the input KAF document and returns a new KAF document containing
+    # the results.
     #
     # @param [String] input
     # @return [String]
     #
     def run(input)
-      begin
-        language = language_from_kaf(input)
+      language = language_from_kaf(input)
 
-        unless valid_language?(language)
-          raise ArgumentError, "The specified language (#{language}) is invalid"
-        end
-
-        kernel = language_constant(language).new(:args => options[:args])
-
-        return kernel.run(input)
-      rescue Exception => error
-        return Opener::Core::ErrorLayer.new(input, error.message, self.class).add
+      unless valid_language?(language)
+        raise ArgumentError, "The specified language (#{language}) is invalid"
       end
+
+      kernel = language_constant(language).new(kernel_options)
+
+      return kernel.run(input)
     end
 
     protected
+
+    ##
+    # Returns the options to use for the kernel.
+    #
+    # @return [Hash]
+    #
+    def kernel_options
+      return options.merge(:resource_path => models_path)
+    end
+
+    ##
+    # Returns the path to the models to use.
+    #
+    # @return [String]
+    #
+    def models_path
+      return options[:resource_path] || ENV['RESOURCE_PATH'] ||
+        ENV['OPINION_DETECTOR_MODELS_PATH']
+    end
 
     ##
     # Extracts the language from a KAF document.

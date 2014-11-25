@@ -1,5 +1,3 @@
-require 'sinatra/base'
-require 'httpclient'
 require 'opener/webservice'
 
 module Opener
@@ -7,23 +5,11 @@ module Opener
     ##
     # Opinion Detector server powered by Sinatra.
     #
-    class Server < Webservice
+    class Server < Webservice::Server
       set :views, File.expand_path('../views', __FILE__)
-      text_processor OpinionDetector
-      accepted_params :input
 
-      ##
-      # @see Opener::Webservice#analyze
-      #
-      def analyze(*args)
-        begin
-          super
-        # ArgumentErrors are used for invalid languages. These happen too often
-        # so we'll supress them for now.
-        rescue ArgumentError => error
-          halt(400, error.message.strip)
-        end
-      end
+      self.text_processor  = OpinionDetector
+      self.accepted_params = [:input]
     end # Server
   end # OpinionDetector
 end # Opener

@@ -1,6 +1,12 @@
 #!/usr/bin/env ruby
+
+require 'opener/core'
+
 require_relative '../lib/opener/opinion_detector'
 
-cli = Opener::OpinionDetector::CLI.new(:args => ARGV)
+switcher = Opener::Core::ResourceSwitcher.new
+cli      = Opener::OpinionDetector::CLI.new
 
-cli.run(STDIN.tty? ? nil : STDIN.read)
+switcher.bind(cli.parser)
+
+cli.run
