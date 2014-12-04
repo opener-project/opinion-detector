@@ -2,6 +2,7 @@ require 'open3'
 
 require 'nokogiri'
 require 'slop'
+require 'opener/core'
 require 'opener/opinion_detectors/base'
 
 require_relative 'opinion_detector/version'
@@ -38,7 +39,7 @@ module Opener
       language = language_from_kaf(input)
 
       unless valid_language?(language)
-        raise ArgumentError, "The specified language (#{language}) is invalid"
+        raise Core::UnsupportedLanguageError, language
       end
 
       kernel = language_constant(language).new(kernel_options)
@@ -46,7 +47,20 @@ module Opener
       return kernel.run(input)
     end
 
-    protected
+    ##
+    # Extracts the language from a KAF document.
+    #
+    # @param [String] input
+    # @return [String]
+    #
+    def language_from_kaf(input)
+      document = Nokogiri::XML(input)
+      language = document.xpath('KAF/@xml:lang')[0]
+
+      return language ? language.to_s : nil
+    end
+
+    private
 
     ##
     # Returns the options to use for the kernel.
@@ -65,18 +79,6 @@ module Opener
     def models_path
       return options[:resource_path] || ENV['RESOURCE_PATH'] ||
         ENV['OPINION_DETECTOR_MODELS_PATH']
-    end
-
-    ##
-    # Extracts the language from a KAF document.
-    #
-    # @param [String] input
-    # @return [String]
-    #
-    def language_from_kaf(input)
-      reader = Nokogiri::XML::Reader(input)
-
-      return reader.read.lang
     end
 
     ##
