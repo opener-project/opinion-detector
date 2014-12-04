@@ -1,0 +1,25 @@
+---
+language: ruby
+
+script: bundle exec rake
+
+before_install:
+  - sudo apt-get update -qq
+  - sudo apt-get install -qq libarchive-dev
+
+rvm:
+  - jruby
+
+notifications:
+  email:
+    recipients:
+      - development+travis-opener@olery.com
+
+    on_success: change
+    on_failure: change
+
+cache: bundler
+
+branches:
+  only:
+    - master
